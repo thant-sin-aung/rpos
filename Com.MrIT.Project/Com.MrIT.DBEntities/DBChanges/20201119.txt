@@ -1,0 +1,590 @@
+﻿-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`sys_user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`sys_user` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `FullName` VARCHAR(100) NULL,
+  `PinCode` INT(32) NULL,
+  `Role` VARCHAR(45) NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`menu_category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`menu_category` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `Name` VARCHAR(100) NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`menu_type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`menu_type` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `Name` VARCHAR(100) NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`menu_item`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`menu_item` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `menu_category_ID` INT NOT NULL,
+  `menu_type_ID` INT NOT NULL,
+  `Name` VARCHAR(500) NOT NULL,
+  `FeaturedImage` VARCHAR(1000) NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_menu_item_category_idx` (`menu_category_ID` ASC) VISIBLE,
+  INDEX `fk_menu_item_menu_type1_idx` (`menu_type_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_menu_item_category`
+    FOREIGN KEY (`menu_category_ID`)
+    REFERENCES `mydb`.`menu_category` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_menu_item_menu_type1`
+    FOREIGN KEY (`menu_type_ID`)
+    REFERENCES `mydb`.`menu_type` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`table_area`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`table_area` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `Name` VARCHAR(50) NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`table_item`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`table_item` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `TableNumber` VARCHAR(50) NULL,
+  `Type` VARCHAR(45) NULL COMMENT 'Room or Table',
+  `Charges` DECIMAL(18,2) NULL DEFAULT 0,
+  `table_area_ID` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_table_item_table_area1_idx` (`table_area_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_table_item_table_area1`
+    FOREIGN KEY (`table_area_ID`)
+    REFERENCES `mydb`.`table_area` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`invoice`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`invoice` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `SaleOn` DATETIME NULL,
+  `SubTotal` DECIMAL(18,2) NOT NULL DEFAULT 0,
+  `Tax` DECIMAL(18,2) NOT NULL DEFAULT 0,
+  `ServiceCharges` DECIMAL(18,2) NOT NULL DEFAULT 0,
+  `TableCharges` DECIMAL(18,2) NOT NULL DEFAULT 0,
+  `Total` DECIMAL(18,2) NOT NULL DEFAULT 0,
+  `Status` VARCHAR(45) NULL,
+  `table_item_ID` INT NOT NULL,
+  `sys_user_ID` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_invoice_table_item1_idx` (`table_item_ID` ASC) VISIBLE,
+  INDEX `fk_invoice_sys_user1_idx` (`sys_user_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_invoice_table_item1`
+    FOREIGN KEY (`table_item_ID`)
+    REFERENCES `mydb`.`table_item` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_invoice_sys_user1`
+    FOREIGN KEY (`sys_user_ID`)
+    REFERENCES `mydb`.`sys_user` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`payment_method`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`payment_method` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `Name` VARCHAR(45) NULL,
+  `NeedTransactionID` BIT NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`payment`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`payment` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `Method` VARCHAR(45) NULL,
+  `Amount` DECIMAL(18,2) NULL,
+  `TranactionID` VARCHAR(45) NULL,
+  `Status` VARCHAR(45) NULL,
+  `invoice_ID` INT NOT NULL,
+  `payment_method_ID` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_payment_invoice1_idx` (`invoice_ID` ASC) VISIBLE,
+  INDEX `fk_payment_payment_method1_idx` (`payment_method_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_payment_invoice1`
+    FOREIGN KEY (`invoice_ID`)
+    REFERENCES `mydb`.`invoice` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_payment_payment_method1`
+    FOREIGN KEY (`payment_method_ID`)
+    REFERENCES `mydb`.`payment_method` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`log_change`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`log_change` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `TableName` VARCHAR(500) NULL,
+  `FieldName` VARCHAR(100) NULL,
+  `FieldValue` LONGTEXT NULL,
+  `Action` VARCHAR(50) NULL,
+  `TableID` VARCHAR(45) NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`email_template`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`email_template` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `Template` VARCHAR(500) NULL,
+  `Subject` VARCHAR(500) NULL,
+  `Content` LONGTEXT NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`log_email`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`log_email` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `ReceiverCC` VARCHAR(500) NULL,
+  `Subject` VARCHAR(500) NULL,
+  `Body` LONGTEXT NULL,
+  `AttachmentFiles` VARCHAR(500) NULL,
+  `IsSuccess` BIT(1) NOT NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`log_error`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`log_error` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `Error` LONGTEXT NULL,
+  `StackTrace` LONGTEXT NULL,
+  `Message` LONGTEXT NULL,
+  `URL` LONGTEXT NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`log_login`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`log_login` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `Username` VARCHAR(100) NULL,
+  `Browser` VARCHAR(1000) NULL,
+  `IPAddress` VARCHAR(500) NULL,
+  `MachineIPAddress` VARCHAR(500) NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`order`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`order` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `SubmittedOn` DATETIME NULL,
+  `Status` VARCHAR(45) NULL,
+  `invoice_ID` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_order_invoice1_idx` (`invoice_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_order_invoice1`
+    FOREIGN KEY (`invoice_ID`)
+    REFERENCES `mydb`.`invoice` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`menu_item_portion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`menu_item_portion` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `Name` VARCHAR(100) NULL,
+  `Price` DECIMAL(18,2) NULL,
+  `menu_item_ID` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_menu_item_portion_menu_item1_idx` (`menu_item_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_menu_item_portion_menu_item1`
+    FOREIGN KEY (`menu_item_ID`)
+    REFERENCES `mydb`.`menu_item` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`order_item`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`order_item` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `ItemName` VARCHAR(45) NULL,
+  `Qty` DECIMAL(18,2) NULL,
+  `UnitPrice` DECIMAL(18,2) NULL,
+  `TotalPrice` DECIMAL(18,2) NULL,
+  `Note` VARCHAR(1000) NULL,
+  `Status` VARCHAR(45) NULL,
+  `IsGift` BIT NULL,
+  `order_ID` INT NOT NULL,
+  `menu_item_portion_ID` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_order_item_order1_idx` (`order_ID` ASC) VISIBLE,
+  INDEX `fk_order_item_menu_item_portion1_idx` (`menu_item_portion_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_order_item_order1`
+    FOREIGN KEY (`order_ID`)
+    REFERENCES `mydb`.`order` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_order_item_menu_item_portion1`
+    FOREIGN KEY (`menu_item_portion_ID`)
+    REFERENCES `mydb`.`menu_item_portion` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`table_status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`table_status` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `table_item_ID` INT NOT NULL,
+  `Status` VARCHAR(45) NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_table_status_table_item1_idx` (`table_item_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_table_status_table_item1`
+    FOREIGN KEY (`table_item_ID`)
+    REFERENCES `mydb`.`table_item` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`material_category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`material_category` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `Name` VARCHAR(100) NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`material_item`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`material_item` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `Name` VARCHAR(100) NULL,
+  `material_category_ID` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_material_item_material_category1_idx` (`material_category_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_material_item_material_category1`
+    FOREIGN KEY (`material_category_ID`)
+    REFERENCES `mydb`.`material_category` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`material_uom`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`material_uom` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `Name` VARCHAR(100) NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`menu_item_material`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`menu_item_material` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `material_item_ID` INT NOT NULL,
+  `Qty` DECIMAL(18,2) NULL,
+  `material_uom_ID` INT NOT NULL,
+  `menu_item_portion_ID` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_menu_item_material_material_item1_idx` (`material_item_ID` ASC) VISIBLE,
+  INDEX `fk_menu_item_material_material_uom1_idx` (`material_uom_ID` ASC) VISIBLE,
+  INDEX `fk_menu_item_material_menu_item_portion1_idx` (`menu_item_portion_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_menu_item_material_material_item1`
+    FOREIGN KEY (`material_item_ID`)
+    REFERENCES `mydb`.`material_item` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_menu_item_material_material_uom1`
+    FOREIGN KEY (`material_uom_ID`)
+    REFERENCES `mydb`.`material_uom` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_menu_item_material_menu_item_portion1`
+    FOREIGN KEY (`menu_item_portion_ID`)
+    REFERENCES `mydb`.`menu_item_portion` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`order_item_material`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`order_item_material` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `material_item_ID` INT NOT NULL,
+  `material_uom_ID` INT NOT NULL,
+  `Qty` DECIMAL(11) NULL,
+  `order_item_ID` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_order_item_material_material_item1_idx` (`material_item_ID` ASC) VISIBLE,
+  INDEX `fk_order_item_material_material_uom1_idx` (`material_uom_ID` ASC) VISIBLE,
+  INDEX `fk_order_item_material_order_item1_idx` (`order_item_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_order_item_material_material_item1`
+    FOREIGN KEY (`material_item_ID`)
+    REFERENCES `mydb`.`material_item` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_order_item_material_material_uom1`
+    FOREIGN KEY (`material_uom_ID`)
+    REFERENCES `mydb`.`material_uom` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_order_item_material_order_item1`
+    FOREIGN KEY (`order_item_ID`)
+    REFERENCES `mydb`.`order_item` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`invoice_partial_payment`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`invoice_partial_payment` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Active` BIT(1) NULL DEFAULT NULL,
+  `SystemActive` BIT(1) NULL DEFAULT NULL,
+  `CreatedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `CreatedOn` DATETIME NULL DEFAULT NULL,
+  `ModifiedBy` VARCHAR(45) NULL DEFAULT NULL,
+  `ModifiedOn` DATETIME NULL DEFAULT NULL,
+  `invoice_ID` INT NOT NULL,
+  `menu_item_portion_ID` INT NOT NULL,
+  `Qty` DECIMAL(18,2) NULL,
+  `Total` DECIMAL(18,2) NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_invoice_partial_payment_invoice1_idx` (`invoice_ID` ASC) VISIBLE,
+  INDEX `fk_invoice_partial_payment_menu_item_portion1_idx` (`menu_item_portion_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_invoice_partial_payment_invoice1`
+    FOREIGN KEY (`invoice_ID`)
+    REFERENCES `mydb`.`invoice` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_invoice_partial_payment_menu_item_portion1`
+    FOREIGN KEY (`menu_item_portion_ID`)
+    REFERENCES `mydb`.`menu_item_portion` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
