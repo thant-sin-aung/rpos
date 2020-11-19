@@ -25,7 +25,7 @@ namespace Com.MrIT.PublicSite.Controllers
 
         public UsersController(IMrUserService svsUser, IEmailService svsEmail, IHttpContextAccessor accessor)
         {
-            
+            //testing
             this._svsUser = svsUser;
             this._svsEmail = svsEmail;
             this._accessor = accessor;
