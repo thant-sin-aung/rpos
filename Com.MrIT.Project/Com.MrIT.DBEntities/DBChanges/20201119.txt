@@ -11,13 +11,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `rpos` DEFAULT CHARACTER SET utf8 ;
+USE `rpos` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`sys_user`
+-- Table `rpos`.`sys_user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`sys_user` (
+CREATE TABLE IF NOT EXISTS `rpos`.`sys_user` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -33,9 +33,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`menu_category`
+-- Table `rpos`.`menu_category`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`menu_category` (
+CREATE TABLE IF NOT EXISTS `rpos`.`menu_category` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -49,9 +49,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`menu_type`
+-- Table `rpos`.`menu_type`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`menu_type` (
+CREATE TABLE IF NOT EXISTS `rpos`.`menu_type` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -65,9 +65,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`menu_item`
+-- Table `rpos`.`menu_item`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`menu_item` (
+CREATE TABLE IF NOT EXISTS `rpos`.`menu_item` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -84,21 +84,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`menu_item` (
   INDEX `fk_menu_item_menu_type1_idx` (`menu_type_ID` ASC) VISIBLE,
   CONSTRAINT `fk_menu_item_category`
     FOREIGN KEY (`menu_category_ID`)
-    REFERENCES `mydb`.`menu_category` (`ID`)
+    REFERENCES `rpos`.`menu_category` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_menu_item_menu_type1`
     FOREIGN KEY (`menu_type_ID`)
-    REFERENCES `mydb`.`menu_type` (`ID`)
+    REFERENCES `rpos`.`menu_type` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`table_area`
+-- Table `rpos`.`table_area`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`table_area` (
+CREATE TABLE IF NOT EXISTS `rpos`.`table_area` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -112,9 +112,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`table_item`
+-- Table `rpos`.`table_item`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`table_item` (
+CREATE TABLE IF NOT EXISTS `rpos`.`table_item` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -130,16 +130,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`table_item` (
   INDEX `fk_table_item_table_area1_idx` (`table_area_ID` ASC) VISIBLE,
   CONSTRAINT `fk_table_item_table_area1`
     FOREIGN KEY (`table_area_ID`)
-    REFERENCES `mydb`.`table_area` (`ID`)
+    REFERENCES `rpos`.`table_area` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`invoice`
+-- Table `rpos`.`invoice`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`invoice` (
+CREATE TABLE IF NOT EXISTS `rpos`.`invoice` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -161,21 +161,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`invoice` (
   INDEX `fk_invoice_sys_user1_idx` (`sys_user_ID` ASC) VISIBLE,
   CONSTRAINT `fk_invoice_table_item1`
     FOREIGN KEY (`table_item_ID`)
-    REFERENCES `mydb`.`table_item` (`ID`)
+    REFERENCES `rpos`.`table_item` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_invoice_sys_user1`
     FOREIGN KEY (`sys_user_ID`)
-    REFERENCES `mydb`.`sys_user` (`ID`)
+    REFERENCES `rpos`.`sys_user` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`payment_method`
+-- Table `rpos`.`payment_method`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`payment_method` (
+CREATE TABLE IF NOT EXISTS `rpos`.`payment_method` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -190,9 +190,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`payment`
+-- Table `rpos`.`payment`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`payment` (
+CREATE TABLE IF NOT EXISTS `rpos`.`payment` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -211,21 +211,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`payment` (
   INDEX `fk_payment_payment_method1_idx` (`payment_method_ID` ASC) VISIBLE,
   CONSTRAINT `fk_payment_invoice1`
     FOREIGN KEY (`invoice_ID`)
-    REFERENCES `mydb`.`invoice` (`ID`)
+    REFERENCES `rpos`.`invoice` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_payment_payment_method1`
     FOREIGN KEY (`payment_method_ID`)
-    REFERENCES `mydb`.`payment_method` (`ID`)
+    REFERENCES `rpos`.`payment_method` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`log_change`
+-- Table `rpos`.`log_change`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`log_change` (
+CREATE TABLE IF NOT EXISTS `rpos`.`log_change` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -243,9 +243,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`email_template`
+-- Table `rpos`.`email_template`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`email_template` (
+CREATE TABLE IF NOT EXISTS `rpos`.`email_template` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -261,9 +261,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`log_email`
+-- Table `rpos`.`log_email`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`log_email` (
+CREATE TABLE IF NOT EXISTS `rpos`.`log_email` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -281,9 +281,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`log_error`
+-- Table `rpos`.`log_error`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`log_error` (
+CREATE TABLE IF NOT EXISTS `rpos`.`log_error` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -300,9 +300,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`log_login`
+-- Table `rpos`.`log_login`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`log_login` (
+CREATE TABLE IF NOT EXISTS `rpos`.`log_login` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -319,9 +319,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`order`
+-- Table `rpos`.`order`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`order` (
+CREATE TABLE IF NOT EXISTS `rpos`.`order` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -336,16 +336,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`order` (
   INDEX `fk_order_invoice1_idx` (`invoice_ID` ASC) VISIBLE,
   CONSTRAINT `fk_order_invoice1`
     FOREIGN KEY (`invoice_ID`)
-    REFERENCES `mydb`.`invoice` (`ID`)
+    REFERENCES `rpos`.`invoice` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`menu_item_portion`
+-- Table `rpos`.`menu_item_portion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`menu_item_portion` (
+CREATE TABLE IF NOT EXISTS `rpos`.`menu_item_portion` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -360,16 +360,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`menu_item_portion` (
   INDEX `fk_menu_item_portion_menu_item1_idx` (`menu_item_ID` ASC) VISIBLE,
   CONSTRAINT `fk_menu_item_portion_menu_item1`
     FOREIGN KEY (`menu_item_ID`)
-    REFERENCES `mydb`.`menu_item` (`ID`)
+    REFERENCES `rpos`.`menu_item` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`order_item`
+-- Table `rpos`.`order_item`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`order_item` (
+CREATE TABLE IF NOT EXISTS `rpos`.`order_item` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -391,21 +391,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`order_item` (
   INDEX `fk_order_item_menu_item_portion1_idx` (`menu_item_portion_ID` ASC) VISIBLE,
   CONSTRAINT `fk_order_item_order1`
     FOREIGN KEY (`order_ID`)
-    REFERENCES `mydb`.`order` (`ID`)
+    REFERENCES `rpos`.`order` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_order_item_menu_item_portion1`
     FOREIGN KEY (`menu_item_portion_ID`)
-    REFERENCES `mydb`.`menu_item_portion` (`ID`)
+    REFERENCES `rpos`.`menu_item_portion` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`table_status`
+-- Table `rpos`.`table_status`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`table_status` (
+CREATE TABLE IF NOT EXISTS `rpos`.`table_status` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -419,16 +419,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`table_status` (
   INDEX `fk_table_status_table_item1_idx` (`table_item_ID` ASC) VISIBLE,
   CONSTRAINT `fk_table_status_table_item1`
     FOREIGN KEY (`table_item_ID`)
-    REFERENCES `mydb`.`table_item` (`ID`)
+    REFERENCES `rpos`.`table_item` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`material_category`
+-- Table `rpos`.`material_category`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`material_category` (
+CREATE TABLE IF NOT EXISTS `rpos`.`material_category` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -442,9 +442,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`material_item`
+-- Table `rpos`.`material_item`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`material_item` (
+CREATE TABLE IF NOT EXISTS `rpos`.`material_item` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -458,16 +458,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`material_item` (
   INDEX `fk_material_item_material_category1_idx` (`material_category_ID` ASC) VISIBLE,
   CONSTRAINT `fk_material_item_material_category1`
     FOREIGN KEY (`material_category_ID`)
-    REFERENCES `mydb`.`material_category` (`ID`)
+    REFERENCES `rpos`.`material_category` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`material_uom`
+-- Table `rpos`.`material_uom`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`material_uom` (
+CREATE TABLE IF NOT EXISTS `rpos`.`material_uom` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -481,9 +481,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`menu_item_material`
+-- Table `rpos`.`menu_item_material`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`menu_item_material` (
+CREATE TABLE IF NOT EXISTS `rpos`.`menu_item_material` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -501,26 +501,26 @@ CREATE TABLE IF NOT EXISTS `mydb`.`menu_item_material` (
   INDEX `fk_menu_item_material_menu_item_portion1_idx` (`menu_item_portion_ID` ASC) VISIBLE,
   CONSTRAINT `fk_menu_item_material_material_item1`
     FOREIGN KEY (`material_item_ID`)
-    REFERENCES `mydb`.`material_item` (`ID`)
+    REFERENCES `rpos`.`material_item` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_menu_item_material_material_uom1`
     FOREIGN KEY (`material_uom_ID`)
-    REFERENCES `mydb`.`material_uom` (`ID`)
+    REFERENCES `rpos`.`material_uom` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_menu_item_material_menu_item_portion1`
     FOREIGN KEY (`menu_item_portion_ID`)
-    REFERENCES `mydb`.`menu_item_portion` (`ID`)
+    REFERENCES `rpos`.`menu_item_portion` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`order_item_material`
+-- Table `rpos`.`order_item_material`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`order_item_material` (
+CREATE TABLE IF NOT EXISTS `rpos`.`order_item_material` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -538,26 +538,26 @@ CREATE TABLE IF NOT EXISTS `mydb`.`order_item_material` (
   INDEX `fk_order_item_material_order_item1_idx` (`order_item_ID` ASC) VISIBLE,
   CONSTRAINT `fk_order_item_material_material_item1`
     FOREIGN KEY (`material_item_ID`)
-    REFERENCES `mydb`.`material_item` (`ID`)
+    REFERENCES `rpos`.`material_item` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_order_item_material_material_uom1`
     FOREIGN KEY (`material_uom_ID`)
-    REFERENCES `mydb`.`material_uom` (`ID`)
+    REFERENCES `rpos`.`material_uom` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_order_item_material_order_item1`
     FOREIGN KEY (`order_item_ID`)
-    REFERENCES `mydb`.`order_item` (`ID`)
+    REFERENCES `rpos`.`order_item` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`invoice_partial_payment`
+-- Table `rpos`.`invoice_partial_payment`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`invoice_partial_payment` (
+CREATE TABLE IF NOT EXISTS `rpos`.`invoice_partial_payment` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Active` BIT(1) NULL DEFAULT NULL,
   `SystemActive` BIT(1) NULL DEFAULT NULL,
@@ -574,12 +574,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`invoice_partial_payment` (
   INDEX `fk_invoice_partial_payment_menu_item_portion1_idx` (`menu_item_portion_ID` ASC) VISIBLE,
   CONSTRAINT `fk_invoice_partial_payment_invoice1`
     FOREIGN KEY (`invoice_ID`)
-    REFERENCES `mydb`.`invoice` (`ID`)
+    REFERENCES `rpos`.`invoice` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_invoice_partial_payment_menu_item_portion1`
     FOREIGN KEY (`menu_item_portion_ID`)
-    REFERENCES `mydb`.`menu_item_portion` (`ID`)
+    REFERENCES `rpos`.`menu_item_portion` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
