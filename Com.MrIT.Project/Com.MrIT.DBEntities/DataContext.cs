@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Com.MrIT.DBEntities.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,5 +23,22 @@ namespace Com.MrIT.DBEntities
 
 
         public virtual DbSet<MrUser> MrUsers { get; set; }
+
+        public virtual DbSet<MaterialCategory> MaterialCategories { get; set; }
+
+        public virtual DbSet<MaterialItem> MaterialItems { get; set; }
+
+        public virtual DbSet<MaterialUOM> MaterialUOMs { get; set; }
+
+        public virtual DbSet<MenuCategory> MenuCategories { get; set; }
+
+        public virtual DbSet<MenuItem> MenuItems { get; set; }
+
+        public virtual DbSet<MenuItemMaterial> MenuItemMaterials { get; set; }
+
+        public virtual DbSet<MenuItemPortion> MenuItemPortions { get; set; }
+
+        public virtual DbSet<MenuType> MenuTypes { get; set; }
+
     }
 }

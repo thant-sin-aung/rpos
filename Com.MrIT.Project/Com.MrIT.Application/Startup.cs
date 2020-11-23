@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Com.MrIT.Common.Configuration;
+using Com.MrIT.DataRepository;
 using Com.MrIT.DBEntities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -109,11 +110,20 @@ namespace Com.MrIT.Application
         {
             //// Register for repository classes
             //services.AddScoped<IBranchRepository, BranchRepository>();
-           
+
 
             //// Register for logic classes
             //services.AddScoped<IUserService, UserService>();
-            
+
+            services.AddScoped<IMaterialCategoryRepository, MaterialCategoryRepository>();
+            services.AddScoped<IMaterialItemRepository, MaterialItemRepository>();
+            services.AddScoped<IMaterialUOMRepository, MaterialUOMRepository>();
+            services.AddScoped<IMenuCategoryReopsitory, MenuCategoryRepository>();
+            services.AddScoped<IMenuItemMaterialRepository, MenuItemMaterialRepository>();
+            services.AddScoped<IMenuItemPortionRepository, MenuItemPortionRepository>();
+            services.AddScoped<IMenuItemRepository, MenuItemRepository>();
+            services.AddScoped<IMenuTypeRepository, MenuTypeRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

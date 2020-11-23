@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `rpos`.`payment` (
   `ModifiedOn` DATETIME NULL DEFAULT NULL,
   `Method` VARCHAR(45) NULL,
   `Amount` DECIMAL(18,2) NULL,
-  `TranactionID` VARCHAR(45) NULL,
+  `TransactionID` VARCHAR(45) NULL,
   `Status` VARCHAR(45) NULL,
   `invoice_ID` INT NOT NULL,
   `payment_method_ID` INT NOT NULL,
