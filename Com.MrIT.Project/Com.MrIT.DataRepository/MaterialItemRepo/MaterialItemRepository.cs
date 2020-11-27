@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Com.MrIT.DataRepository
+{ 
     public class MaterialItemRepository : GenericRepository<MaterialItem>, IMaterialItemRepository
     {
         public MaterialItemRepository(DataContext context, ILoggerFactory loggerFactory) :

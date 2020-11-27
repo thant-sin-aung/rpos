@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Com.MrIT.ViewModels.VmTable
+namespace Com.MrIT.ViewModels
 {
-    class VmPayment:ViewModelItemBase
+    public class VmPayment:ViewModelItemBase
     {
-        public string Method { get; set }
+        public string Method { get; set; }
         public decimal Amount { get; set; }
         public string TransactionID { get; set; }
         public string Status { get; set; }

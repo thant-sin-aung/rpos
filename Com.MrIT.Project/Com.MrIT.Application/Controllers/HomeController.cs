@@ -8,9 +8,11 @@ using Microsoft.Extensions.Logging;
 using Com.MrIT.Application.Models;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
+using Com.MrIT.App.Filters;
 
 namespace Com.MrIT.Application.Controllers
 {
+    [MrITActionFilter]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -20,6 +22,7 @@ namespace Com.MrIT.Application.Controllers
             _logger = logger;
         }
 
+        
         public IActionResult Index()
         {
             return View();

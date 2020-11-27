@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Com.MrIT.DataRepository
+{ 
     public class MaterialUOMRepository : GenericRepository<MaterialUOM>, IMaterialUOMRepository
     {
         public MaterialUOMRepository(DataContext context, ILoggerFactory loggerFactory) :

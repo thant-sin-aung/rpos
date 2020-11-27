@@ -10,7 +10,7 @@ namespace Com.MrIT.DBEntities.Entities
     [Table("table_status")]
     public class TableStatus:GenericEntity
     {
-        public string Status { get;set }
+        public string Status { get; set; }
 
         [ForeignKey("TableItemID")]
         public virtual TableItem TableItem { get; set; }

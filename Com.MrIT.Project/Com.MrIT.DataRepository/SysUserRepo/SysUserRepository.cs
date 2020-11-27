@@ -3,6 +3,7 @@ using Com.MrIT.DBEntities.Entities;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Com.MrIT.DataRepository
@@ -13,6 +14,13 @@ namespace Com.MrIT.DataRepository
         base(context, loggerFactory, "SysUserRepository")
         {
 
+        }
+
+        public SysUser ValidateUser(int pin)
+        {
+            var record = this.entities.Where(e => e.SystemActive == true && e.PinCode == pin).FirstOrDefault();
+
+            return record;
         }
     }
 }

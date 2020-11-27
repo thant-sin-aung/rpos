@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Com.MrIT.DataRepository
+{ 
     public interface IMenuTypeRepository : IGenericRepository<MenuType>
     {
     }

@@ -7,5 +7,6 @@ namespace Com.MrIT.DataRepository
 {
     public interface ISysUserRepository : IGenericRepository<SysUser>
     {
+        SysUser ValidateUser(int pin);
     }
 }

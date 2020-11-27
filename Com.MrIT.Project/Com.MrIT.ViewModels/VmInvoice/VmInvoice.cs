@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Com.MrIT.ViewModels.VmTable
+namespace Com.MrIT.ViewModels
 {
-    class VmInvoice:ViewModelItemBase
+    public class VmInvoice:ViewModelItemBase
     {
-        public DateTime SaleOn { get; set }
+        public DateTime SaleOn { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Tax { get; set; }
         public decimal ServiceCharges { get; set; }

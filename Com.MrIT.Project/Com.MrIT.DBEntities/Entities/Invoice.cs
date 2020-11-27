@@ -10,7 +10,7 @@ namespace Com.MrIT.DBEntities.Entities
     [Table("invoice")]
     public class Invoice:GenericEntity
     {
-        public DateTime SaleOn { get;set }
+        public DateTime SaleOn { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Tax { get; set; }
         public decimal ServiceCharges { get; set; }

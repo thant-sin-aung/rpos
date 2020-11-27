@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Com.MrIT.ViewModels.VmTable
+namespace Com.MrIT.ViewModels
 {
     class VmPaymentMethod:ViewModelItemBase
     {

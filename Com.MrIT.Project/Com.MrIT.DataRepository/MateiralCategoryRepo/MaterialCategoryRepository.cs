@@ -14,6 +14,6 @@ namespace Com.MrIT.DataRepository
         {
 
         }
-    {
+    
     }
 }

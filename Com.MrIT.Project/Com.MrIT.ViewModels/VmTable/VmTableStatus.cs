@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Com.MrIT.ViewModels.VmTable
+namespace Com.MrIT.ViewModels
 {
-    class VmTableStatus:ViewModelItemBase
+    public class VmTableStatus:ViewModelItemBase
     {
-        public string Status { get; set }
+        public string Status { get; set; }
     }
 }

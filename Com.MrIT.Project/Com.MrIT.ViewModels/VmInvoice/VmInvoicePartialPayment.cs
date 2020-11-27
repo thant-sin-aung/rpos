@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Com.MrIT.ViewModels.VmTable
+namespace Com.MrIT.ViewModels
 {
-    class VmInvoicePartialPayment:ViewModelItemBase
+    public class VmInvoicePartialPayment:ViewModelItemBase
     {
         public decimal Qty { get; set; }
         public decimal Total { get; set; }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Com.MrIT.Common.Configuration;
 using Com.MrIT.DataRepository;
 using Com.MrIT.DBEntities;
+using Com.MrIT.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -108,13 +109,14 @@ namespace Com.MrIT.Application
 
         private void RegisterForDependencyInjection(IServiceCollection services)
         {
-            //// Register for repository classes
-            //services.AddScoped<IBranchRepository, BranchRepository>();
 
 
             //// Register for logic classes
             //services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>();
 
+            //// Register for repository classes
+            //services.AddScoped<IBranchRepository, BranchRepository>();
             services.AddScoped<IMaterialCategoryRepository, MaterialCategoryRepository>();
             services.AddScoped<IMaterialItemRepository, MaterialItemRepository>();
             services.AddScoped<IMaterialUOMRepository, MaterialUOMRepository>();

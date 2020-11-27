@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Com.MrIT.ViewModels.VmTable
+namespace Com.MrIT.ViewModels
 {
-    class VmTableItem:ViewModelItemBase
+    public class VmTableItem:ViewModelItemBase
     {
         public string TableNumber { get; set; }
         public string Type { get; set; }

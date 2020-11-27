@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Com.MrIT.ViewModels.VmTable
+namespace Com.MrIT.ViewModels
 {
-    class VmSysUser:ViewModelItemBase
+    public class VmSysUser:ViewModelItemBase
     {
         public string FullName { get; set; }
         public int PinCode { get; set; }

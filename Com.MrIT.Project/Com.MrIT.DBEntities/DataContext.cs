@@ -22,7 +22,7 @@ namespace Com.MrIT.DBEntities
         public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
 
 
-        public virtual DbSet<MrUser> MrUsers { get; set; }
+        
 
         public virtual DbSet<MaterialCategory> MaterialCategories { get; set; }
 

@@ -1,0 +1,2 @@
+﻿INSERT INTO `rpos`.`sys_user` (`Active`, `SystemActive`, `CreatedBy`, `CreatedOn`, `ModifiedBy`, `ModifiedOn`, `FullName`, `PinCode`, `Role`) 
+VALUES (True, True, 'System', '2020-11-27', 'System', '2020-11-27', 'Administrator', '1234', 'Admin');

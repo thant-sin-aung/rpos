@@ -10,7 +10,7 @@ namespace Com.MrIT.DBEntities.Entities
     [Table("order")]
     public class Order:GenericEntity
     {
-        public DateTime SubmittedOn { get;set }
+        public DateTime SubmittedOn { get; set; }
 
         public string Status { get; set; }
 

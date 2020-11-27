@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Com.MrIT.DataRepository
+{ 
     public class MenuItemPortionRepository : GenericRepository<MenuItemPortion>, IMenuItemPortionRepository
     {
         public MenuItemPortionRepository(DataContext context, ILoggerFactory loggerFactory) :

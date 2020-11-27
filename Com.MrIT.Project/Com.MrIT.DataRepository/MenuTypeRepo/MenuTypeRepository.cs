@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Com.MrIT.DataRepository
+{ 
     public class MenuTypeRepository : GenericRepository<MenuType>, IMenuTypeRepository
     {
         public MenuTypeRepository(DataContext context, ILoggerFactory loggerFactory) :
