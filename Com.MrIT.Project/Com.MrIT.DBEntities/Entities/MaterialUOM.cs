@@ -11,5 +11,6 @@ namespace Com.MrIT.DBEntities.Entities
         public string Name { get; set; }
 
         public ICollection<MenuItemMaterial> MenuItemMaterials { get; set; }
+        public ICollection<OrderItemMaterial> OrderItemMaterials { get; set; }
     }
 }

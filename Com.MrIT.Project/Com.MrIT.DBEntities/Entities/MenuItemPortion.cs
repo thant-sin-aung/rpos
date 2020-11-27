@@ -13,6 +13,8 @@ namespace Com.MrIT.DBEntities.Entities
         public decimal Price { get; set; }
 
         public ICollection<MenuItemMaterial> MenuItemMaterials { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
+        public ICollection<InvoicePartialPayment> InvoicePartialPayments { get; set; }
 
         [ForeignKey ("menu_item_ID")]
         public virtual MenuItem MenuItem{ get; set; }

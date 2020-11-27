@@ -14,5 +14,6 @@ namespace Com.MrIT.DBEntities.Entities
         public virtual MaterialCategory MatrialCategory { get; set; }
 
         public ICollection<MenuItemMaterial> MenuItemMaterials { get; set; }
+        public ICollection<OrderItemMaterial> OrderItemMaterials { get; set; }
     }
 }

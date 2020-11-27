@@ -123,6 +123,18 @@ namespace Com.MrIT.Application
             services.AddScoped<IMenuItemPortionRepository, MenuItemPortionRepository>();
             services.AddScoped<IMenuItemRepository, MenuItemRepository>();
             services.AddScoped<IMenuTypeRepository, MenuTypeRepository>();
+            services.AddScoped<ITableAreaRepository, TableAreaRepository>();
+            services.AddScoped<ITableItemRepository, TableItemRepository>();
+            services.AddScoped<ITableStatusRepository, TableStatusRepository>();
+            services.AddScoped<ISysUserRepository, SysUserRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            services.AddScoped<IOrderItemMaterialRepository, OrderItemMaterialRepository>();
+            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            services.AddScoped<IInvoicePartialPaymentRepository, InvoicePartialPaymentRepository>();
+
 
         }
 
