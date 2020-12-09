@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Com.MrIT.DataRepository
 {
-    public class MenuCategoryRepository : GenericRepository<MenuCategory>, IMenuCategoryReopsitory
+    public class MenuCategoryRepository : GenericRepository<MenuCategory>, IMenuCategoryRepository
     {
         public MenuCategoryRepository(DataContext context, ILoggerFactory loggerFactory) :
         base(context, loggerFactory, "MenuCategoryRepository")

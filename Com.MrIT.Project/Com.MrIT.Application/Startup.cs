@@ -114,13 +114,14 @@ namespace Com.MrIT.Application
             //// Register for logic classes
             //services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMenuCategoryService, MenuCategoryService>();
 
             //// Register for repository classes
             //services.AddScoped<IBranchRepository, BranchRepository>();
             services.AddScoped<IMaterialCategoryRepository, MaterialCategoryRepository>();
             services.AddScoped<IMaterialItemRepository, MaterialItemRepository>();
             services.AddScoped<IMaterialUOMRepository, MaterialUOMRepository>();
-            services.AddScoped<IMenuCategoryReopsitory, MenuCategoryRepository>();
+            services.AddScoped<IMenuCategoryRepository, MenuCategoryRepository>();
             services.AddScoped<IMenuItemMaterialRepository, MenuItemMaterialRepository>();
             services.AddScoped<IMenuItemPortionRepository, MenuItemPortionRepository>();
             services.AddScoped<IMenuItemRepository, MenuItemRepository>();

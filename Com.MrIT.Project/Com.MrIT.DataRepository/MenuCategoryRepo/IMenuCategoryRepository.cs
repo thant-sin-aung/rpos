@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Com.MrIT.DataRepository
 {
-    public interface IMenuCategoryReopsitory : IGenericRepository<MenuCategory>
+    public interface IMenuCategoryRepository : IGenericRepository<MenuCategory>
     {
     }
 }
