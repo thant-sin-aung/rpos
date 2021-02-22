@@ -88,7 +88,7 @@ namespace Com.MrIT.DataRepository
             var result = entity;
             this.Commit();
             //RecordChangeLog(entity, "Create");
-
+            
             string tableID = entity.ID.ToString();
             try
             {
@@ -126,7 +126,7 @@ namespace Com.MrIT.DataRepository
             {
                 string err = ex.Message;
             }
-
+            
             return result;
         }
 

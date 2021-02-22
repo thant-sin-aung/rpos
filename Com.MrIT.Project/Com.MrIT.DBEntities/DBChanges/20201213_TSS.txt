@@ -1,0 +1,2 @@
+﻿INSERT INTO `rpos`.`menu_category` (`Active`, `SystemActive`, `CreatedBy`, `CreatedOn`, `ModifiedBy`, `ModifiedOn`, `Name`) 
+VALUES (True, True, 'System', '2020-12-13 00:00:00', 'System', '2020-12-13 00:00:00', 'Breakfast');

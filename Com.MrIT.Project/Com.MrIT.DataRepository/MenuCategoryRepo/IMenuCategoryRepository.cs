@@ -7,5 +7,6 @@ namespace Com.MrIT.DataRepository
 {
     public interface IMenuCategoryRepository : IGenericRepository<MenuCategory>
     {
+        MenuCategory GetMenuCategory(int id);
     }
 }
